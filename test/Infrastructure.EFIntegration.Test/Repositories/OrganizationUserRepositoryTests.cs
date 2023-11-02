@@ -9,13 +9,13 @@ using Bit.Core.Models.Data;
 using Bit.Core.Models.Data.Organizations.OrganizationUsers;
 using Bit.Core.Repositories;
 using Bit.Core.Test.AutoFixture.Attributes;
-using Bit.Infrastructure.Dapper.AdminConsole.Repositories;
 using Bit.Infrastructure.EFIntegration.Test.AutoFixture;
 using Bit.Infrastructure.EFIntegration.Test.Repositories.EqualityComparers;
 using Xunit;
 using EfAdminConsoleRepo = Bit.Infrastructure.EntityFramework.AdminConsole.Repositories;
 using EfRepo = Bit.Infrastructure.EntityFramework.Repositories;
 using OrganizationUser = Bit.Core.Entities.OrganizationUser;
+using SqlAdminConsoleRepo = Bit.Infrastructure.Dapper.AdminConsole.Repositories;
 using SqlRepo = Bit.Infrastructure.Dapper.Repositories;
 
 namespace Bit.Infrastructure.EFIntegration.Test.Repositories;
@@ -194,7 +194,7 @@ public class OrganizationUserRepositoryTests
         List<EfAdminConsoleRepo.ProviderUserRepository> efProviderUserRepository,
 
         // Auto data - SQL repos
-        PolicyRepository sqlPolicyRepo,
+        SqlAdminConsoleRepo.PolicyRepository sqlPolicyRepo,
         SqlRepo.UserRepository sqlUserRepo,
         SqlRepo.OrganizationRepository sqlOrganizationRepo,
         EfAdminConsoleRepo.ProviderRepository sqlProviderRepo,
