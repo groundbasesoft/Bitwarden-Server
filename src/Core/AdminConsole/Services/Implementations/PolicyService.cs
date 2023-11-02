@@ -118,8 +118,8 @@ public class PolicyService : IPolicyService
                 var orgUsers = await _organizationUserRepository.GetManyDetailsByOrganizationAsync(
                     policy.OrganizationId);
                 var removableOrgUsers = orgUsers.Where(ou =>
-                    ou.Status != Core.Enums.OrganizationUserStatusType.Invited && ou.Status != Core.Enums.OrganizationUserStatusType.Revoked &&
-                    ou.Type != Core.Enums.OrganizationUserType.Owner && ou.Type != Core.Enums.OrganizationUserType.Admin &&
+                    ou.Status != OrganizationUserStatusType.Invited && ou.Status != OrganizationUserStatusType.Revoked &&
+                    ou.Type != OrganizationUserType.Owner && ou.Type != OrganizationUserType.Admin &&
                     ou.UserId != savingUserId);
                 switch (policy.Type)
                 {
@@ -158,7 +158,7 @@ public class PolicyService : IPolicyService
         }
         policy.RevisionDate = now;
         await _policyRepository.UpsertAsync(policy);
-        await _eventService.LogPolicyEventAsync(policy, Core.Enums.EventType.Policy_Updated);
+        await _eventService.LogPolicyEventAsync(policy, EventType.Policy_Updated);
     }
 
     public async Task<MasterPasswordPolicyData> GetMasterPasswordPolicyForUserAsync(User user)

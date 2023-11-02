@@ -2,6 +2,7 @@
 using Bit.Core.AdminConsole.Enums;
 using Bit.Core.AdminConsole.Repositories;
 using Bit.Infrastructure.EntityFramework.AdminConsole.Repositories.Queries;
+using Bit.Infrastructure.EntityFramework.Models;
 using Bit.Infrastructure.EntityFramework.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,7 +10,7 @@ using AdminConsoleEntities = Bit.Core.AdminConsole.Entities;
 
 namespace Bit.Infrastructure.EntityFramework.AdminConsole.Repositories;
 
-public class PolicyRepository : Repository<AdminConsoleEntities.Policy, EntityFramework.Models.Policy, Guid>, IPolicyRepository
+public class PolicyRepository : Repository<AdminConsoleEntities.Policy, Policy, Guid>, IPolicyRepository
 {
     public PolicyRepository(IServiceScopeFactory serviceScopeFactory, IMapper mapper)
         : base(serviceScopeFactory, mapper, (DatabaseContext context) => context.Policies)

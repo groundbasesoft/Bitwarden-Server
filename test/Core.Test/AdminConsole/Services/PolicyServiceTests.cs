@@ -13,11 +13,11 @@ using Bit.Core.Exceptions;
 using Bit.Core.Models.Data.Organizations.OrganizationUsers;
 using Bit.Core.Repositories;
 using Bit.Core.Services;
-using Bit.Core.Test.AdminConsole.AutoFixture;
 using Bit.Test.Common.AutoFixture;
 using Bit.Test.Common.AutoFixture.Attributes;
 using NSubstitute;
 using Xunit;
+using AdminConsoleFixtures = Bit.Core.Test.AdminConsole.AutoFixture;
 using GlobalSettings = Bit.Core.Settings.GlobalSettings;
 
 namespace Bit.Core.Test.AdminConsole.Services;
@@ -27,7 +27,7 @@ public class PolicyServiceTests
 {
     [Theory, BitAutoData]
     public async Task SaveAsync_OrganizationDoesNotExist_ThrowsBadRequest(
-        [Policy(PolicyType.DisableSend)] Policy policy, SutProvider<PolicyService> sutProvider)
+        [AdminConsoleFixtures.Policy(PolicyType.DisableSend)] Policy policy, SutProvider<PolicyService> sutProvider)
     {
         SetupOrg(sutProvider, policy.OrganizationId, null);
 
@@ -50,7 +50,7 @@ public class PolicyServiceTests
 
     [Theory, BitAutoData]
     public async Task SaveAsync_OrganizationCannotUsePolicies_ThrowsBadRequest(
-        [Policy(PolicyType.DisableSend)] Policy policy, SutProvider<PolicyService> sutProvider)
+        [AdminConsoleFixtures.Policy(PolicyType.DisableSend)] Policy policy, SutProvider<PolicyService> sutProvider)
     {
         var orgId = Guid.NewGuid();
 
@@ -78,7 +78,7 @@ public class PolicyServiceTests
 
     [Theory, BitAutoData]
     public async Task SaveAsync_SingleOrg_RequireSsoEnabled_ThrowsBadRequest(
-        [Policy(PolicyType.SingleOrg)] Policy policy, SutProvider<PolicyService> sutProvider)
+        [AdminConsoleFixtures.Policy(PolicyType.SingleOrg)] Policy policy, SutProvider<PolicyService> sutProvider)
     {
         policy.Enabled = false;
 
@@ -110,7 +110,7 @@ public class PolicyServiceTests
     }
 
     [Theory, BitAutoData]
-    public async Task SaveAsync_SingleOrg_VaultTimeoutEnabled_ThrowsBadRequest([Policy(PolicyType.SingleOrg)] Policy policy, SutProvider<PolicyService> sutProvider)
+    public async Task SaveAsync_SingleOrg_VaultTimeoutEnabled_ThrowsBadRequest([AdminConsoleFixtures.Policy(PolicyType.SingleOrg)] Policy policy, SutProvider<PolicyService> sutProvider)
     {
         policy.Enabled = false;
 
@@ -177,7 +177,7 @@ public class PolicyServiceTests
 
     [Theory, BitAutoData]
     public async Task SaveAsync_RequireSsoPolicy_NotEnabled_ThrowsBadRequestAsync(
-        [Policy(PolicyType.RequireSso)] Policy policy, SutProvider<PolicyService> sutProvider)
+        [AdminConsoleFixtures.Policy(PolicyType.RequireSso)] Policy policy, SutProvider<PolicyService> sutProvider)
     {
         policy.Enabled = true;
 
@@ -210,7 +210,7 @@ public class PolicyServiceTests
 
     [Theory, BitAutoData]
     public async Task SaveAsync_NewPolicy_Created(
-        [Policy(PolicyType.ResetPassword)] Policy policy, SutProvider<PolicyService> sutProvider)
+        [AdminConsoleFixtures.Policy(PolicyType.ResetPassword)] Policy policy, SutProvider<PolicyService> sutProvider)
     {
         policy.Id = default;
         policy.Data = null;
@@ -241,7 +241,7 @@ public class PolicyServiceTests
 
     [Theory, BitAutoData]
     public async Task SaveAsync_VaultTimeoutPolicy_NotEnabled_ThrowsBadRequestAsync(
-        [Policy(PolicyType.MaximumVaultTimeout)] Policy policy, SutProvider<PolicyService> sutProvider)
+        [AdminConsoleFixtures.Policy(PolicyType.MaximumVaultTimeout)] Policy policy, SutProvider<PolicyService> sutProvider)
     {
         policy.Enabled = true;
 
@@ -274,7 +274,7 @@ public class PolicyServiceTests
 
     [Theory, BitAutoData]
     public async Task SaveAsync_ExistingPolicy_UpdateTwoFactor(
-        [Policy(PolicyType.TwoFactorAuthentication)] Policy policy, SutProvider<PolicyService> sutProvider)
+        [AdminConsoleFixtures.Policy(PolicyType.TwoFactorAuthentication)] Policy policy, SutProvider<PolicyService> sutProvider)
     {
         // If the policy that this is updating isn't enabled then do some work now that the current one is enabled
 
@@ -344,7 +344,7 @@ public class PolicyServiceTests
 
     [Theory, BitAutoData]
     public async Task SaveAsync_ExistingPolicy_UpdateSingleOrg(
-        [Policy(PolicyType.TwoFactorAuthentication)] Policy policy, SutProvider<PolicyService> sutProvider)
+        [AdminConsoleFixtures.Policy(PolicyType.TwoFactorAuthentication)] Policy policy, SutProvider<PolicyService> sutProvider)
     {
         // If the policy that this is updating isn't enabled then do some work now that the current one is enabled
 
@@ -413,7 +413,7 @@ public class PolicyServiceTests
     public async Task SaveAsync_ResetPasswordPolicyRequiredByTrustedDeviceEncryption_DisablePolicyOrDisableAutomaticEnrollment_ThrowsBadRequest(
         bool policyEnabled,
         bool autoEnrollEnabled,
-        [Policy(PolicyType.ResetPassword)] Policy policy,
+        [AdminConsoleFixtures.Policy(PolicyType.ResetPassword)] Policy policy,
         SutProvider<PolicyService> sutProvider)
     {
         policy.Enabled = policyEnabled;
@@ -454,7 +454,7 @@ public class PolicyServiceTests
 
     [Theory, BitAutoData]
     public async Task SaveAsync_RequireSsoPolicyRequiredByTrustedDeviceEncryption_DisablePolicy_ThrowsBadRequest(
-        [Policy(PolicyType.RequireSso)] Policy policy,
+        [AdminConsoleFixtures.Policy(PolicyType.RequireSso)] Policy policy,
         SutProvider<PolicyService> sutProvider)
     {
         policy.Enabled = false;
@@ -491,7 +491,7 @@ public class PolicyServiceTests
 
     [Theory, BitAutoData]
     public async Task SaveAsync_PolicyRequiredForAccountRecovery_NotEnabled_ThrowsBadRequestAsync(
-        [Policy(PolicyType.ResetPassword)] Policy policy, SutProvider<PolicyService> sutProvider)
+        [AdminConsoleFixtures.Policy(PolicyType.ResetPassword)] Policy policy, SutProvider<PolicyService> sutProvider)
     {
         policy.Enabled = true;
         policy.SetDataModel(new ResetPasswordDataModel());
@@ -526,7 +526,7 @@ public class PolicyServiceTests
 
     [Theory, BitAutoData]
     public async Task SaveAsync_SingleOrg_AccountRecoveryEnabled_ThrowsBadRequest(
-        [Policy(PolicyType.SingleOrg)] Policy policy, SutProvider<PolicyService> sutProvider)
+        [AdminConsoleFixtures.Policy(PolicyType.SingleOrg)] Policy policy, SutProvider<PolicyService> sutProvider)
     {
         policy.Enabled = false;
 
